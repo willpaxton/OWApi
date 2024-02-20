@@ -1,1 +1,2 @@
 # OWApi
+2/20/24 4:21PM - The first issue I encountered was getting this repository set up.  The repository wasn't trusted at first, and then it wasn't connected to the remote at github. After 15 minutes of troubleshooting, I was finally able to get it working.
