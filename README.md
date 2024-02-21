@@ -8,3 +8,5 @@
 11:11PM - Still not able to let the GET request happen and let it do its thing before it decides to give up.
 
 1am - im tired and its still not working
+
+2am - async programming sucks
