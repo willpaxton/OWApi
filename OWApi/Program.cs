@@ -56,23 +56,27 @@ namespace OWApi
                 firstAsk = false;
             } while (platform == String.Empty);
 
-            HttpClient httpClient = new HttpClient();
+            OWAPIDriver APIDriver = new OWAPIDriver(battletag, region, platform);
 
-            async void getResp()
+            bool isitdoneyetpls = false;
+
+            async void doThings()
             {
-                var apiCountResponse = await httpClient.GetFromJsonAsync<JsonElement>($"http://ow-api.com/v1/stats/{platform}/{region}/{battletag.Replace("#", "-")}/profile");
-                Thread.Sleep(1000);
-                Console.WriteLine(apiCountResponse);
-                Console.WriteLine("done :3");
+                Console.WriteLine("frick");
+                string responseABC = Console.ReadLine();
+                string data = await APIDriver.GetPlayerData();
+                await Console.Out.WriteLineAsync(data);
+                await Task.Delay(5000);
             }
 
-            getResp();
 
-            Console.WriteLine("done 2");
 
-            Thread.Sleep(1000000);
+            Console.WriteLine(APIDriver.GetPokemonCount());
+            doThings();
 
-            // test
+            while (true) {
+                doThings();
+            }
         }
     }
 }
