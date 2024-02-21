@@ -6,3 +6,5 @@
 10:33PM - Another issue I am encountering is that the request takes "too long" (or more my code goes too quickly) and I skip over the code I need that would parse the response, solution soon?
 
 11:11PM - Still not able to let the GET request happen and let it do its thing before it decides to give up.
+
+1am - im tired and its still not working
