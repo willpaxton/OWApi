@@ -10,3 +10,5 @@
 1am - im tired and its still not working
 
 2am - async programming sucks
+
+2/22, 1:33am - OH I JUST HAD TO MAKE THE MAIN ASYNC wow im really dumb
