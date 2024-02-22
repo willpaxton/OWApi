@@ -12,3 +12,6 @@
 2am - async programming sucks
 
 2/22, 1:33am - OH I JUST HAD TO MAKE THE MAIN ASYNC wow im really dumb
+
+Okay I finally finished up.
+It took me a minute to figure out how to properly get async/await to work, but now I understand why we use it and how to implement it.
