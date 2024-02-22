@@ -6,7 +6,7 @@ namespace OWApi
 {
     internal class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
             Regex battletagRegex = new Regex("[A-Za-z0-9]+#[0-9]+");
             // Note: I know this regex doesn't encapsalate every allowed character, just... it's alot
@@ -56,27 +56,82 @@ namespace OWApi
                 firstAsk = false;
             } while (platform == String.Empty);
 
+            firstAsk = true;
+
+            string specificCall = String.Empty;
+
+            do
+            {
+                if (!firstAsk) Console.WriteLine("Please answer with 1, 2, 3, 4, or 5");
+                Console.Write("\nWhat would you like the API to return?\n1) Your Name\n2) Quickplay Winrate\n3) Competitive Winrate\n4) Specific Hero Quickplay Time Played\n5) Specific Hero Competitive Time Played\nEnter your answer here: ");
+                string response = Console.ReadLine();
+
+                if (response == "1") specificCall = "name";
+                if (response == "2") specificCall = "qw";
+                if (response == "3") specificCall = "cw";
+                if (response == "4") specificCall = "hqp";
+                if (response == "5") specificCall = "hcp";
+
+
+                firstAsk = false;
+            } while (specificCall == String.Empty);
+
+            string specHero = String.Empty;
+
+            if (specificCall == "hqp" || specificCall == "hcp")
+            {
+                Console.Write("\nWhat hero?: ");
+                specHero = Console.ReadLine();
+            }
+
             OWAPIDriver APIDriver = new OWAPIDriver(battletag, region, platform);
 
             bool isitdoneyetpls = false;
 
-            async void doThings()
+            /*async void doThings()
             {
                 Console.WriteLine("frick");
                 string responseABC = Console.ReadLine();
                 string data = await APIDriver.GetPlayerData();
                 await Console.Out.WriteLineAsync(data);
                 await Task.Delay(5000);
+            }*/
+
+            static async Task GetAsync(HttpClient httpClient)
+            {
+                using HttpResponseMessage response = await httpClient.GetAsync("https://jsonplaceholder.typicode.com/todos/3");
+
+                response.EnsureSuccessStatusCode();
+
+                var jsonResponse = await response.Content.ReadAsStringAsync();
+                Console.WriteLine($"{jsonResponse}\n");
+
+                // Expected output:
+                //   GET https://jsonplaceholder.typicode.com/todos/3 HTTP/1.1
+                //   {
+                //     "userId": 1,
+                //     "id": 3,
+                //     "title": "fugiat veniam minus",
+                //     "completed": false
+                //   }
             }
 
+            // https://learn.microsoft.com/en-us/dotnet/fundamentals/networking/http/httpclient idk :(
+            // HttpClient httpClient = new HttpClient();
+            // await GetAsync(httpClient);
 
 
-            Console.WriteLine(APIDriver.GetPokemonCount());
-            doThings();
+            // Console.WriteLine(APIDriver.GetPokemonCount());
 
-            while (true) {
-                doThings();
-            }
+            Console.WriteLine();
+
+            if (specificCall == "name") await APIDriver.GetPlayerData();
+            if (specificCall == "qw") await APIDriver.GetPlayerQuickPlayWinrate();
+            if (specificCall == "cw") await APIDriver.GetPlayerCompetitiveWinrate();
+            if (specificCall == "hqp") await APIDriver.GetPlayerQuickplayHero(specHero);
+            if (specificCall == "hcp") await APIDriver.GetPlayerCompetitiveHero(specHero);
+
+
         }
     }
 }
